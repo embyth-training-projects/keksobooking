@@ -30,6 +30,8 @@
     if (!window.isPageActivated) {
       activatePage();
     }
+
+    window.dragndrop.activate(downEvt);
   }
 
   // Обработчик кнопки Enter для главного маркера
