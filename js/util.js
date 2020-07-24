@@ -6,30 +6,32 @@
     KEY_CODES: {
       ENTER: 13,
       ESC: 27
+    },
+    ADS: {
+      TOTAL: 8
+    },
+    PIN: {
+      SIZE: {
+        WIDTH: 64,
+        HEIGHT: 64,
+        TAIL: 22
+      },
+      DEFAULT_POSITION: {
+        X: 570,
+        Y: 375
+      }
     }
   };
 
   // Глобальные методы
   window.util = {
     // Проверка на нажатие кнопки Enter
-    isEnterKey: function (evt, action) {
-      if (evt.keyCode === window.CONSTANTS.KEY_CODES.ENTER) {
-        action();
-      }
+    isEnterKey: function (evt) {
+      return evt.keyCode === window.CONSTANTS.KEY_CODES.ENTER;
     },
     // Проверка на нажатие кнопки ESC
-    isEscKey: function (evt, action) {
-      if (evt.keyCode === window.CONSTANTS.KEY_CODES.ESC) {
-        action();
-      }
-    },
-    // Показать элемент
-    showElement: function (element) {
-      element.classList.remove('hidden');
-    },
-    // Скрыть элемент
-    hideElement: function (element) {
-      element.classList.add('hidden');
+    isEscKey: function (evt) {
+      return evt.keyCode === window.CONSTANTS.KEY_CODES.ESC;
     },
     // Получить случайное число
     getRandomIndex: function (number) {
@@ -63,6 +65,10 @@
       while (node.firstChild) {
         node.firstChild.remove();
       }
+    },
+    // Проверяем есть ли массив и содержит ли он что-то
+    isArrayEmpty: function (array) {
+      return !(Array.isArray(array) && array.length);
     }
   };
 })();

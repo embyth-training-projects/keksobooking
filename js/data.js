@@ -1,9 +1,6 @@
 'use strict';
 
 (function () {
-  // Количесво объявлений
-  var TOTAL_ADS = 8;
-
   // Информация для объявлений
   var OffersData = {
     TITLES: [
@@ -107,5 +104,7 @@
     return ads;
   }
 
-  window.generatedAds = createAdsArray(TOTAL_ADS);
+  window.data = {
+    createAds: createAdsArray
+  };
 })();

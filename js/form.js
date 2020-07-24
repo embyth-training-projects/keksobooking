@@ -1,49 +1,79 @@
 'use strict';
 
 (function () {
-  var adForm = document.querySelector('.ad-form');
-  var formReset = adForm.querySelector('.ad-form__reset');
+  // Элементы формы
+  var formNode = document.querySelector('.ad-form');
+  var fieldsetNodes = formNode.querySelectorAll('fieldset');
+  var formAddressInput = formNode.querySelector('#address');
+  var formResetButton = formNode.querySelector('.ad-form__reset');
 
-  // Переключатель инпутов
-  function toggleInputs(form, isDisabled) {
-    form.querySelectorAll('input').forEach(function (input) {
-      input.disabled = isDisabled;
-    });
+  var mainPinNode = document.querySelector('.map__pin--main');
 
-    form.querySelectorAll('select').forEach(function (select) {
-      select.disabled = isDisabled;
-    });
-
-    form.querySelectorAll('textarea').forEach(function (textarea) {
-      textarea.disabled = isDisabled;
-    });
-
-    form.querySelectorAll('button').forEach(function (button) {
-      button.disabled = isDisabled;
-    });
+  // Обновляем адрес
+  function updateAddress() {
+    if (window.isPageActivated) {
+      var x = mainPinNode.offsetLeft + window.CONSTANTS.PIN.SIZE.WIDTH / 2;
+      var y = mainPinNode.offsetTop + window.CONSTANTS.PIN.SIZE.HEIGHT + window.CONSTANTS.PIN.SIZE.TAIL;
+    } else {
+      x = mainPinNode.offsetLeft + window.CONSTANTS.PIN.SIZE.WIDTH / 2;
+      y = mainPinNode.offsetTop + window.CONSTANTS.PIN.SIZE.HEIGHT / 2;
+    }
+    formAddressInput.value = x + ', ' + y;
   }
 
-  // Обработчик сброса формы
-  function formResetClickHandler(evt) {
-    evt.preventDefault();
+  // Активируем форму
+  function activate() {
+    formNode.classList.remove('ad-form--disabled');
 
-    adForm.reset();
-    window.disableMap();
+    fieldsetNodes.forEach(function (fieldset) {
+      fieldset.disabled = false;
+    });
+
+    formNode.addEventListener('click', onResetButtonClick);
+    formNode.addEventListener('keydown', onResetButtonKeyDown);
+
+    window.validation.activate();
   }
 
-  window.addFormOfferHandlers = function () {
-    window.addFormValidationHandlers();
-    toggleInputs(adForm, false);
-    adForm.classList.remove('ad-form--disabled');
+  // Откдючаем форму
+  function disable() {
+    formNode.classList.add('ad-form--disabled');
 
-    formReset.addEventListener('click', formResetClickHandler);
-  };
+    fieldsetNodes.forEach(function (fieldset) {
+      fieldset.disabled = true;
+    });
 
-  window.removeFormOfferHandlers = function () {
-    window.removeFormValidationHandlers();
-    toggleInputs(adForm, true);
-    adForm.classList.add('ad-form--disabled');
+    formNode.removeEventListener('click', onResetButtonClick);
+    formNode.removeEventListener('keydown', onResetButtonKeyDown);
 
-    formReset.removeEventListener('click', formResetClickHandler);
+    window.validation.disable();
+    formAddressInput.readOnly = true;
+  }
+
+  // Обработчик кнопки Enter на ресете формы
+  function onResetButtonClick(evt) {
+    if (evt.target === formResetButton) {
+      evt.preventDefault();
+      window.card.close();
+      formNode.reset();
+      disable();
+      updateAddress();
+      window.map.disable();
+      window.isPageActivated = false;
+    }
+  }
+
+  // Обработчик кнопки Enter на ресете формы
+  function onResetButtonKeyDown(evt) {
+    if (window.util.isEnterKey(evt) && evt.target === formResetButton) {
+      onResetButtonClick();
+    }
+  }
+
+  // Заносим функции в глобальную область видимости
+  window.form = {
+    updateAddress: updateAddress,
+    activate: activate,
+    disable: disable
   };
 })();
