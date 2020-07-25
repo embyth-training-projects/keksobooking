@@ -31,6 +31,7 @@
 
     formNode.addEventListener('click', onResetButtonClick);
     formNode.addEventListener('keydown', onResetButtonKeyDown);
+    formNode.addEventListener('submit', onFormSubmit);
 
     window.validation.activate();
   }
@@ -48,6 +49,21 @@
 
     window.validation.disable();
     formAddressInput.readOnly = true;
+  }
+
+  // При успешной отправке формы
+  function onSuccess() {
+    disable();
+    formNode.reset();
+    window.map.disable();
+    updateAddress();
+    window.message.show('success');
+    window.isPageActivated = false;
+  }
+
+  // При ошибке отправке формы
+  function onError() {
+    window.message.show('error');
   }
 
   // Обработчик кнопки Enter на ресете формы
@@ -68,6 +84,12 @@
     if (window.util.isEnterKey(evt) && evt.target === formResetButton) {
       onResetButtonClick();
     }
+  }
+
+  // Обработчик отправки формы
+  function onFormSubmit(evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(formNode), onSuccess, onError);
   }
 
   // Заносим функции в глобальную область видимости

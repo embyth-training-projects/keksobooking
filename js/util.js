@@ -69,6 +69,35 @@
     // Проверяем есть ли массив и содержит ли он что-то
     isArrayEmpty: function (array) {
       return !(Array.isArray(array) && array.length);
+    },
+    // Блокируем прокрутку страницы
+    blockBodyScroll: function () {
+      document.body.style.overflowY = 'hidden';
+    },
+    // Разблокируем прокрутку страницы
+    unblockBodyScroll: function () {
+      document.body.style.overflowY = 'auto';
+    },
+    // Показ ошибки
+    showError: function (errorMessage) {
+      var node = document.createElement('div');
+
+      node.style.zIndex = 100;
+      node.style.width = '100%';
+      node.style.margin = '0 auto';
+      node.style.padding = '5px 0';
+      node.style.textAlign = 'center';
+      node.style.position = 'absolute';
+      node.style.left = 0;
+      node.style.top = 0;
+      node.style.backgroundColor = 'red';
+      node.style.color = 'white';
+      node.style.fontSize = '30px';
+
+      node.classList.add('error-alert');
+
+      node.textContent = errorMessage;
+      document.body.insertAdjacentElement('afterbegin', node);
     }
   };
 })();

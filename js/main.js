@@ -14,15 +14,6 @@
     mainPinNode.removeEventListener('keydown', onMainPinKeyDown);
   }
 
-  // Отключаем страницу
-  function disablePage() {
-    window.offers = window.data.createAds(window.CONSTANTS.ADS.TOTAL);
-    window.form.updateAddress();
-    window.form.disable();
-    mainPinNode.addEventListener('mousedown', onMainPinMouseDown);
-    mainPinNode.addEventListener('keydown', onMainPinKeyDown);
-  }
-
   // Обработчик кнопки вниз на мыше для главного маркера
   function onMainPinMouseDown(downEvt) {
     downEvt.preventDefault();
@@ -44,6 +35,15 @@
     }
   }
 
-  // Отключаем страницу при загрузке
-  disablePage();
+  // При успешной загрузке данных с сервера
+  function onLoad(data) {
+    window.offers = data;
+    mainPinNode.addEventListener('mousedown', onMainPinMouseDown);
+    mainPinNode.addEventListener('keydown', onMainPinKeyDown);
+  }
+
+  // Загружаем данные для объявлений с сервера
+  window.backend.load(onLoad, window.util.showError);
+  window.form.updateAddress();
+  window.form.disable();
 })();

@@ -7,8 +7,8 @@
   // Создаём маркер
   function createPin(offer) {
     var pinNode = document.querySelector('#pin').content.querySelector('.map__pin').cloneNode(true);
-    var pinX = offer.offer.location.x - window.CONSTANTS.PIN.SIZE.WIDTH / 2;
-    var pinY = offer.offer.location.y - window.CONSTANTS.PIN.SIZE.HEIGHT;
+    var pinX = offer.location.x - window.CONSTANTS.PIN.SIZE.WIDTH / 2;
+    var pinY = offer.location.y - window.CONSTANTS.PIN.SIZE.HEIGHT;
     pinNode.style.left = pinX + 'px';
     pinNode.style.top = pinY + 'px';
 
