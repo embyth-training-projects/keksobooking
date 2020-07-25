@@ -166,6 +166,7 @@
     title.addEventListener('input', onTitleChange);
     type.addEventListener('change', onTypeChange);
     price.addEventListener('change', onPriceChange);
+    price.addEventListener('invalid', onPriceChange);
     checkin.addEventListener('change', onCheckinChange);
     checkout.addEventListener('change', onCheckoutChange);
     rooms.addEventListener('change', onRoomsAndGuestsChange);
@@ -177,6 +178,7 @@
     title.removeEventListener('input', onTitleChange);
     type.removeEventListener('change', onTypeChange);
     price.removeEventListener('change', onPriceChange);
+    price.removeEventListener('invalid', onPriceChange);
     checkin.removeEventListener('change', onCheckinChange);
     checkout.removeEventListener('change', onCheckoutChange);
     rooms.removeEventListener('change', onRoomsAndGuestsChange);
