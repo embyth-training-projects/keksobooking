@@ -5,28 +5,39 @@
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
   // Функция загрузки файлов
-  function upload(fileChooser, img) {
-    var file = fileChooser.files[0];
-    var fileName = file.name.toLowerCase();
+  function upload(fileChooser, imgParentNode) {
+    var files = fileChooser.files;
 
-    var matches = FILE_TYPES.some(function (item) {
-      return fileName.endsWith(item);
-    });
+    for (var i = 0; i < files.length; i++) {
+      setupReader(files[i]);
+    }
 
-    if (matches) {
-      var reader = new FileReader();
+    function setupReader(file) {
+      var fileName = file.name.toLowerCase();
 
-      reader.addEventListener('load', function () {
-        img.src = reader.result;
+      var matches = FILE_TYPES.some(function (item) {
+        return fileName.endsWith(item);
       });
 
-      reader.readAsDataURL(file);
-    } else {
-      window.util.showError('Ошибка при чтении файла: ' + fileName);
+      if (matches) {
+        var reader = new FileReader();
 
-      setTimeout(function () {
-        document.querySelector('.error-alert').remove();
-      }, 5000);
+        reader.addEventListener('load', function () {
+          var imageNode = document.createElement('img');
+          imageNode.style.width = '70px';
+          imageNode.style.height = '70px';
+          imageNode.src = reader.result;
+          imgParentNode.appendChild(imageNode);
+        });
+
+        reader.readAsDataURL(file);
+      } else {
+        window.util.showError('Ошибка при чтении файла: ' + fileName);
+
+        setTimeout(function () {
+          document.querySelector('.error-alert').remove();
+        }, 5000);
+      }
     }
   }
 

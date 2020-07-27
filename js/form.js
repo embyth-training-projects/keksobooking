@@ -103,22 +103,18 @@
 
   // Обработчик изменения аватарки
   function onAvatarInputChange() {
-    var avatarImageNode = avatarPreviewNode.querySelector('img');
-    avatarImageNode.style.width = '70px';
-    avatarImageNode.style.height = '70px';
+    window.util.clearNodeChilds(avatarPreviewNode);
     avatarPreviewNode.style.padding = 0;
 
-    window.file.upload(avatarInputNode, avatarImageNode);
+    window.file.upload(avatarInputNode, avatarPreviewNode);
   }
 
   // Обработчик изменения фото
   function onPhotoInputChange() {
-    var photoImageNode = document.createElement('img');
-    photoImageNode.style.width = '70px';
-    photoImageNode.style.height = '70px';
-    photoPreviewNode.appendChild(photoImageNode);
+    window.util.clearNodeChilds(photoPreviewNode);
+    photoPreviewNode.style.width = 'auto';
 
-    window.file.upload(photoInputNode, photoImageNode);
+    window.file.upload(photoInputNode, photoPreviewNode);
   }
 
   // Заносим функции в глобальную область видимости

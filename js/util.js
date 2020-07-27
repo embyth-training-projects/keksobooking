@@ -87,7 +87,7 @@
       node.style.margin = '0 auto';
       node.style.padding = '5px 0';
       node.style.textAlign = 'center';
-      node.style.position = 'absolute';
+      node.style.position = 'fixed';
       node.style.left = 0;
       node.style.top = 0;
       node.style.backgroundColor = 'red';
