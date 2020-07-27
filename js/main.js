@@ -37,6 +37,9 @@
 
   // При успешной загрузке данных с сервера
   function onLoad(data) {
+    for (var i = 0; i < data.length; i++) {
+      data[i].id = i;
+    }
     window.offers = data;
     mainPinNode.addEventListener('mousedown', onMainPinMouseDown);
     mainPinNode.addEventListener('keydown', onMainPinKeyDown);

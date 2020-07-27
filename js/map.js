@@ -15,6 +15,7 @@
   // Активируем карту
   function activate() {
     mapNode.classList.remove('map--faded');
+    window.filter.activate();
   }
 
   // Отключаем карту
@@ -24,6 +25,7 @@
     var mainPin = document.querySelector('.map__pin--main');
     window.pin.setPosition(mainPin, window.CONSTANTS.PIN.DEFAULT_POSITION.X, window.CONSTANTS.PIN.DEFAULT_POSITION.Y);
     mapNode.classList.add('map--faded');
+    window.filter.disable();
   }
 
   // Заносим функции в глобальную область видимости

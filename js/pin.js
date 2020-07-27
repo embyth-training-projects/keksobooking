@@ -28,7 +28,7 @@
       for (var i = 0; i < totalOffers; i++) {
         if (offers[i].offer) {
           var pinElement = createPin(offers[i]);
-          pinElement.setAttribute('data-pin', i);
+          pinElement.setAttribute('data-pin', offers[i].id);
           fragment.appendChild(pinElement);
         }
       }
@@ -62,6 +62,20 @@
     }
   }
 
+  // Обновление маркеров на карте (для фильтров)
+  function update(offers) {
+    var pinNodes = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    window.card.close();
+    pinNodes.forEach(function (pin) {
+      pin.classList.add('hidden');
+      offers.forEach(function (offer) {
+        if (offer.id === parseInt(pin.getAttribute('data-pin'), 10)) {
+          pin.classList.remove('hidden');
+        }
+      });
+    });
+  }
+
   // Обработчик клика на маркер
   function onPinClick(evt) {
     var pinNode = evt.target.closest('.map__pin:not(.map__pin--main)');
@@ -90,6 +104,7 @@
     render: renderPins,
     setPosition: setPosition,
     remove: remove,
-    disable: disable
+    disable: disable,
+    update: update
   };
 })();
