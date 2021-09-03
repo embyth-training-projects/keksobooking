@@ -2,7 +2,7 @@
 
 (function () {
   // Адреса сервера
-  var URL_SAVE = 'https://javascript.pages.academy/keksobooking';
+  var URL_SAVE = 'https://21.javascript.pages.academy/keksobooking';
   var URL_LOAD = URL_SAVE + '/data';
 
   // Создание запроса
@@ -59,6 +59,6 @@
   // Передаем функции в глобальную область видимости
   window.backend = {
     load: load,
-    save: save
+    save: save,
   };
 })();
